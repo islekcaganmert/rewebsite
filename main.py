@@ -11,7 +11,7 @@ app = Flask(__name__)
 @app.route('/<path:path>', methods=['GET', 'POST'])
 @app.route('/', defaults={'path': '/'}, methods=['GET', 'POST'])
 def index(path: str):
-    domain = f"{request.host.removeprefix('re').split('.')[0]}"
+    domain = f"www.{request.host.removeprefix('re').split('.')[0].split('-')[0]}.com"
     url = f"https://{domain}/{path.removeprefix('/')}"
     if {i: request.args[i] for i in request.args}:
         url += '?'
