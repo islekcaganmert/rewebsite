@@ -39,6 +39,8 @@ def index(path: str):
     for i in ['Content-Encoding', 'Transfer-Encoding']:
         if i in headers:
             headers.pop(i)
+    for i in headers:
+        headers[i] = headers[i].replace(domain, request.host)
     if isinstance(content, str):
         content.replace(domain, request.host)
     return Response(
