@@ -30,7 +30,7 @@ def index(path: str):
         if i in headers:
             headers.pop(i)
     for i in headers:
-        headers[i] = headers[i].replace(domain, request.host)
+        headers[i] = headers[i].replace(domain, request.host).replace(f'*{domain.removeprefix("www")}', request.host)
     return Response(
         response=proxy.content.decode().replace(domain, request.host),
         status=proxy.status_code,
