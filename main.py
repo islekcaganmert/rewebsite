@@ -27,10 +27,10 @@ def index(path: str):
     proxy = getattr(requests, request.method.lower())(url, headers=headers, data=request.get_data(), stream=True)
     headers = {i: proxy.headers[i] for i in proxy.headers}
     content = (
-            proxy.content.decode()
-            .replace(domain, request.host)
-            .replace(domain.removeprefix('www.'), request.host)
-        )
+        proxy.content.decode()
+        .replace(domain, request.host)
+        .replace(domain.removeprefix('www'), request.host)
+    )
     for i in ['Content-Encoding', 'Transfer-Encoding']:
         if i in headers:
             headers.pop(i)
@@ -38,10 +38,10 @@ def index(path: str):
         headers['Location'] = (
             headers['Location']
             .replace(domain, request.host)
-            .replace(domain.removeprefix('www.'), request.host)
+            .replace(domain.removeprefix('www'), request.host)
         )
     return Response(
-        response=proxy.content,
+        response=content,
         status=proxy.status_code,
         headers=headers
     )
