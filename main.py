@@ -39,9 +39,9 @@ def index(path: str):
     for i in ['Content-Encoding', 'Transfer-Encoding']:
         if i in headers:
             headers.pop(i)
-    for i in headers:
-        headers[i] = (
-            headers[i]
+    if 'Location' in headers:
+        headers['Location'] = (
+            headers['Location']
             .replace(domain, request.host)
             .replace(domain.removeprefix('www.'), request.host)
             .replace(f"static.cdn{domain.removeprefix('www.')}", f"{request.host}/cdn")
