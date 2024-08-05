@@ -40,7 +40,12 @@ def index(path: str):
         if i in headers:
             headers.pop(i)
     for i in headers:
-        headers[i] = headers[i].replace(domain, request.host).replace(domain.removeprefix('www.'), request.host)
+        headers[i] = (
+            headers[i]
+            .replace(domain, request.host)
+            .replace(domain.removeprefix('www.'), request.host)
+            .replace(f"static.cdn{domain.removeprefix('www.')}", f"{request.host}/cdn")
+        )
     if isinstance(content, str):
         content.replace(domain, request.host)
     return Response(
