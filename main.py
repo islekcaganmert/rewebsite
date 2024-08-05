@@ -29,11 +29,8 @@ def index(path: str):
     for i in ['Content-Encoding', 'Transfer-Encoding']:
         if i in headers:
             headers.pop(i)
-    if 'Location' in headers:
-        headers['Location'] = (
-            headers['Location']
-            .replace(domain, request.host)
-        )
+    for i in headers:
+        headers[i] = headers[i].replace(domain, request.host)
     return Response(
         response=proxy.content.decode().replace(domain, request.host),
         status=proxy.status_code,
